@@ -1,0 +1,14 @@
+Roll no : 23F-3063 | 23F-3100 | Project: Personal Finance/Expense Tracker
+
+Requirement ID | Screen / Filename | Function in My App
+---------------|-------------------|-------------------
+L1 (Coordinator)| activity_main.xml | The main dashboard root. The balance header collapses when scrolling.
+L2 (Constraint) | layout_profile_card.xml | User profile card. Uses Guidelines for layout and Barriers for dynamic text (Name/Roll No).
+L3 (Linear-Weight)| activity_main.xml | Stats bar (Income/Expense/Savings). Weights ensure they have equal width.
+L4 (Relative)   | layout_settings_relative.xml | App settings rows. Uses layout_below and layout_alignParentEnd for toggle switches.
+L5 (Frame)      | activity_main.xml | Notification hub. Bell icon with a red circular badge stacked using gravity.
+L6 (Grid)       | layout_dashboard_grid.xml | Grid of service buttons. The "Investment Portfolio" card spans 2 columns.
+L7 (Table)      | layout_history_table.xml | Transaction history log. Uses stretchColumns to make the description expand.
+L8 (Horizontal) | activity_main.xml | Card carousel that scrolls left-to-right independently of vertical scroll.
+L9 (RadioGroup) | layout_filters_radio.xml | Currency selection group. Only one currency can be selected at a time.
+L10 (Flow)      | layout_filters_radio.xml | Expense category tags. Uses Flow helper to wrap text chips to the next line.
