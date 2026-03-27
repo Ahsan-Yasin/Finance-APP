@@ -257,7 +257,7 @@
                         app:trackColor="#00000000"
                         app:indicatorSize="140dp"
                         app:trackThickness="16dp"
-                        app:progress="100" />
+                        android:progress="100" />
 
                     <!-- Green (Food) -->
                     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -267,7 +267,7 @@
                         app:trackColor="#00000000"
                         app:indicatorSize="140dp"
                         app:trackThickness="16dp"
-                        app:progress="60" />
+                        android:progress="60" />
 
                     <!-- Blue (Rent) -->
                     <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -277,7 +277,7 @@
                         app:trackColor="#00000000"
                         app:indicatorSize="140dp"
                         app:trackThickness="16dp"
-                        app:progress="45" />
+                        android:progress="45" />
 
                     <!-- Center Text -->
                     <LinearLayout
@@ -443,8 +443,7 @@
 
             <!-- Item 1: Apple Store -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 app:cardBackgroundColor="#FCFCFC"
                 app:cardCornerRadius="16dp"
@@ -667,7 +666,7 @@
 
         <!-- Analytics (Selected) -->
         <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-            <com.google.android.material.progressindicator.CircularProgressIndicator android:layout_width="24dp" android:layout_height="24dp" app:indicatorColor="#3100D5" app:trackColor="#3100D5" app:indicatorSize="24dp" app:trackThickness="12dp" app:progress="100"/>
+            <com.google.android.material.progressindicator.CircularProgressIndicator android:layout_width="24dp" android:layout_height="24dp" app:indicatorColor="#3100D5" app:trackColor="#3100D5" app:indicatorSize="24dp" app:trackThickness="12dp" android:progress="100"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Analytics" android:textColor="#3100D5" android:textSize="11sp" android:textStyle="bold" />
         </LinearLayout>
 

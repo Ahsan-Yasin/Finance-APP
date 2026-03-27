@@ -1,7 +1,8 @@
-package com.example.financetracker
+package com.example.financetracker.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.financetracker.R
 import com.example.financetracker.fragments.DashboardFragment
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
             val userEmail = intent.getStringExtra("USER_EMAIL") ?: "User"
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, DashboardFragment.newInstance(userEmail))
-                .commit()
+                 .commit()
         }
     }
 }
