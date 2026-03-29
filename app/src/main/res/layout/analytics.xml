@@ -55,6 +55,8 @@
             android:id="@+id/btn_calendar"
             android:layout_width="44dp"
             android:layout_height="44dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardBackgroundColor="#F4F5F9"
             app:cardCornerRadius="22dp"
             app:cardElevation="0dp"
@@ -111,17 +113,21 @@
                     android:padding="4dp">
 
                     <TextView
+                        android:id="@+id/tab_week"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Week"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:textColor="#8E8E93"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <!-- Selected State (Month) -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/tab_month"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -140,11 +146,14 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/tab_year"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Year"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:textColor="#8E8E93"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -358,10 +367,13 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tv_view_details_cashflow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="View Details"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="#3100D5"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -443,8 +455,11 @@
 
             <!-- Item 1: Apple Store -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_expense_1"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FCFCFC"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -508,9 +523,12 @@
 
             <!-- Item 2: Whole Foods -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_expense_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FCFCFC"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -574,9 +592,12 @@
 
             <!-- Item 3: Uber Trip -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_expense_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FCFCFC"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -659,25 +680,25 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Home -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_home" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_preferences" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Home" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>
 
         <!-- Analytics (Selected) -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_analytics" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <com.google.android.material.progressindicator.CircularProgressIndicator android:layout_width="24dp" android:layout_height="24dp" app:indicatorColor="#3100D5" app:trackColor="#3100D5" app:indicatorSize="24dp" app:trackThickness="12dp" android:progress="100"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Analytics" android:textColor="#3100D5" android:textSize="11sp" android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Wallets -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_wallets" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Wallets" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>
 
         <!-- Settings -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_settings" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_manage" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Settings" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>

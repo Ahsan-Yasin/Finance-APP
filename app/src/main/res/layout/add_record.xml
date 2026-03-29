@@ -52,10 +52,13 @@
 
         <!-- Tab 1: Subscription (Active) -->
         <LinearLayout
+            android:id="@+id/tab_subscription"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_horizontal">
 
             <TextView
@@ -78,10 +81,13 @@
 
         <!-- Tab 2: Debt/IOU (Inactive) -->
         <LinearLayout
+            android:id="@+id/tab_debt_iou"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_horizontal">
 
             <TextView
@@ -243,9 +249,12 @@
 
                     <!-- Monthly (Active) -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/toggle_monthly"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="#FFFFFF"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="2dp"
@@ -262,10 +271,13 @@
 
                     <!-- Yearly (Inactive) -->
                     <TextView
+                        android:id="@+id/toggle_yearly"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:text="Yearly"
                         android:textColor="#6B7280"
                         android:textSize="15sp"

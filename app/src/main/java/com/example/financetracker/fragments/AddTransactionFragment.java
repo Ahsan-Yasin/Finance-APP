@@ -73,7 +73,46 @@ public class AddTransactionFragment extends Fragment {
             }
         };
 
-        btnSave.setOnClickListener(saveListener);
-        btnQuickSave.setOnClickListener(saveListener);
+        if (btnSave != null) btnSave.setOnClickListener(saveListener);
+        if (btnQuickSave != null) btnQuickSave.setOnClickListener(saveListener);
+
+        // --- NEW CLICKS TO MAKE EVERYTHING INTERACTIVE ---
+
+        // Income/Expense Toggles
+        View btnIncome = view.findViewById(R.id.btn_income);
+        if (btnIncome != null) btnIncome.setOnClickListener(v -> Toast.makeText(getContext(), "Income Selected", Toast.LENGTH_SHORT).show());
+        View btnExpense = view.findViewById(R.id.btn_expense);
+        if (btnExpense != null) btnExpense.setOnClickListener(v -> Toast.makeText(getContext(), "Expense Selected", Toast.LENGTH_SHORT).show());
+
+        // Categories
+        View tvSeeAllCategories = view.findViewById(R.id.tv_see_all_categories);
+        if (tvSeeAllCategories != null) tvSeeAllCategories.setOnClickListener(v -> Toast.makeText(getContext(), "View All Categories", Toast.LENGTH_SHORT).show());
+
+        View cardCategoryFood = view.findViewById(R.id.card_category_food);
+        if (cardCategoryFood != null) cardCategoryFood.setOnClickListener(v -> Toast.makeText(getContext(), "Food Category Selected", Toast.LENGTH_SHORT).show());
+        View cardCategoryTransport = view.findViewById(R.id.card_category_transport);
+        if (cardCategoryTransport != null) cardCategoryTransport.setOnClickListener(v -> Toast.makeText(getContext(), "Transport Category Selected", Toast.LENGTH_SHORT).show());
+        View cardCategoryShopping = view.findViewById(R.id.card_category_shopping);
+        if (cardCategoryShopping != null) cardCategoryShopping.setOnClickListener(v -> Toast.makeText(getContext(), "Shopping Category Selected", Toast.LENGTH_SHORT).show());
+        View cardCategoryRent = view.findViewById(R.id.card_category_rent);
+        if (cardCategoryRent != null) cardCategoryRent.setOnClickListener(v -> Toast.makeText(getContext(), "Rent Category Selected", Toast.LENGTH_SHORT).show());
+        View cardCategoryHealth = view.findViewById(R.id.card_category_health);
+        if (cardCategoryHealth != null) cardCategoryHealth.setOnClickListener(v -> Toast.makeText(getContext(), "Health Category Selected", Toast.LENGTH_SHORT).show());
+        View cardCategoryOthers = view.findViewById(R.id.card_category_others);
+        if (cardCategoryOthers != null) cardCategoryOthers.setOnClickListener(v -> Toast.makeText(getContext(), "Other Category Selected", Toast.LENGTH_SHORT).show());
+
+        // Payment Method
+        View cardPaymentMethod = view.findViewById(R.id.card_payment_method);
+        if (cardPaymentMethod != null) cardPaymentMethod.setOnClickListener(v -> Toast.makeText(getContext(), "Select Payment Method", Toast.LENGTH_SHORT).show());
+
+        // Date and Time
+        View cardDatePicker = view.findViewById(R.id.card_date_picker);
+        if (cardDatePicker != null) cardDatePicker.setOnClickListener(v -> Toast.makeText(getContext(), "Select Date", Toast.LENGTH_SHORT).show());
+        View cardTimePicker = view.findViewById(R.id.card_time_picker);
+        if (cardTimePicker != null) cardTimePicker.setOnClickListener(v -> Toast.makeText(getContext(), "Select Time", Toast.LENGTH_SHORT).show());
+
+        // Attach Receipt
+        View cardAttachReceipt = view.findViewById(R.id.card_attach_receipt);
+        if (cardAttachReceipt != null) cardAttachReceipt.setOnClickListener(v -> Toast.makeText(getContext(), "Attach Receipt", Toast.LENGTH_SHORT).show());
     }
 }

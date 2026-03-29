@@ -117,9 +117,12 @@
 
                     <!-- Expense (Active) -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btn_expense"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="#FFFFFF"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="2dp"
@@ -196,10 +199,13 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tv_see_all_categories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="See All"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="#3100D5"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -214,10 +220,13 @@
 
                 <!-- Food -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_food"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -233,10 +242,13 @@
 
                 <!-- Transport (Selected State) -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_transport"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginHorizontal="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#F3F0FF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -252,10 +264,13 @@
 
                 <!-- Shopping -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_shopping"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -280,10 +295,13 @@
 
                 <!-- Rent -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_rent"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -299,10 +317,13 @@
 
                 <!-- Health -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_health"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginHorizontal="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -318,10 +339,13 @@
 
                 <!-- Others -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_category_others"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -347,8 +371,11 @@
                 android:layout_marginBottom="12dp"/>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_payment_method"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FAFAFB"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
@@ -438,8 +465,11 @@
                         android:layout_marginBottom="12dp"/>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_date_picker"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="#FAFAFB"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
@@ -469,8 +499,11 @@
                         android:layout_marginBottom="12dp"/>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_time_picker"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         app:cardBackgroundColor="#FAFAFB"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
@@ -537,9 +570,12 @@
             <!-- Attach Receipt Section -->
             <!-- Note: Using a standard stroke as XML doesn't support dashed borders without external custom shape drawables -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_attach_receipt"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginTop="24dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"

@@ -111,16 +111,61 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
     }
 
     private void setupNavigation(View view) {
-        // Navigate to Accounts/Wallets via Profile Card
+        // Center Floating Action Button
+        View btnAddTransaction = view.findViewById(R.id.btn_add_transaction);
+        if (btnAddTransaction != null) {
+            btnAddTransaction.setOnClickListener(v -> navigateTo(AddTransactionFragment.newInstance()));
+        }
+
+        // Wallets/Budget Navigation
+        View balanceCard = view.findViewById(R.id.balance_card);
+        if (balanceCard != null) {
+            balanceCard.setOnClickListener(v -> navigateTo(SubscriptionFragment.newInstance()));
+        }
+
+        View navBudget = view.findViewById(R.id.nav_budget);
+        if (navBudget != null) {
+            navBudget.setOnClickListener(v -> navigateTo(SubscriptionFragment.newInstance()));
+        }
+
+        // Profile Navigation
         View profileCard = view.findViewById(R.id.profile_card);
         if (profileCard != null) {
             profileCard.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
         }
-        
-        // Navigate to Budget via Balance Card
-        View balanceCard = view.findViewById(R.id.balance_card);
-        if (balanceCard != null) {
-            balanceCard.setOnClickListener(v -> navigateTo(BudgetFragment.newInstance()));
+
+        View navProfile = view.findViewById(R.id.nav_profile);
+        if (navProfile != null) {
+            navProfile.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
+        }
+
+        // Stats/Trends
+        View navTrends = view.findViewById(R.id.nav_trends);
+        if (navTrends != null) {
+            navTrends.setOnClickListener(v -> navigateTo(AnalyticsFragment.newInstance()));
+        }
+
+        // Home
+        View navHome = view.findViewById(R.id.nav_home);
+        if (navHome != null) {
+            navHome.setOnClickListener(v -> Toast.makeText(getContext(), "Already on Home", Toast.LENGTH_SHORT).show());
+        }
+
+        // Income / Expenses
+        View layoutIncome = view.findViewById(R.id.layout_income);
+        if (layoutIncome != null) {
+            layoutIncome.setOnClickListener(v -> Toast.makeText(getContext(), "Income Details", Toast.LENGTH_SHORT).show());
+        }
+
+        View layoutExpense = view.findViewById(R.id.layout_expense);
+        if (layoutExpense != null) {
+            layoutExpense.setOnClickListener(v -> Toast.makeText(getContext(), "Expense Details", Toast.LENGTH_SHORT).show());
+        }
+
+        // Notifications
+        View btnNotifications = view.findViewById(R.id.btn_notifications);
+        if (btnNotifications != null) {
+            btnNotifications.setOnClickListener(v -> Toast.makeText(getContext(), "No new notifications", Toast.LENGTH_SHORT).show());
         }
     }
 

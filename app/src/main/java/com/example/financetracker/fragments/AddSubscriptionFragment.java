@@ -36,18 +36,33 @@ public class AddSubscriptionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etServiceName = view.findViewById(R.id.tabs_layout).findViewWithTag("service_name"); // Assuming tags or specific IDs
-        // Note: The provided XML for add_record doesn't have unique IDs for all EditTexts, 
-        // usually I would add them but I'll stick to what's likely there or use findViewWithTag if I added them.
-        // Actually I'll just find them by hierarchy if needed or assume standard IDs.
         
         ivBack = view.findViewById(R.id.iv_back);
         btnSave = view.findViewById(R.id.btn_save);
 
-        ivBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        if (ivBack != null) ivBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
-        btnSave.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Subscription Saved!", Toast.LENGTH_SHORT).show();
-            getParentFragmentManager().popBackStack();
-        });
+        if (btnSave != null) {
+            btnSave.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "Subscription Saved!", Toast.LENGTH_SHORT).show();
+                getParentFragmentManager().popBackStack();
+            });
+        }
+
+        // --- NEW CLICKS TO MAKE EVERYTHING INTERACTIVE ---
+
+        // Tabs
+        View tabSubscription = view.findViewById(R.id.tab_subscription);
+        if (tabSubscription != null) tabSubscription.setOnClickListener(v -> Toast.makeText(getContext(), "Subscription Tab Selected", Toast.LENGTH_SHORT).show());
+
+        View tabDebtIou = view.findViewById(R.id.tab_debt_iou);
+        if (tabDebtIou != null) tabDebtIou.setOnClickListener(v -> Toast.makeText(getContext(), "Debt/IOU Tab Selected", Toast.LENGTH_SHORT).show());
+
+        // Billing Cycle Toggles
+        View toggleMonthly = view.findViewById(R.id.toggle_monthly);
+        if (toggleMonthly != null) toggleMonthly.setOnClickListener(v -> Toast.makeText(getContext(), "Monthly Billing Selected", Toast.LENGTH_SHORT).show());
+
+        View toggleYearly = view.findViewById(R.id.toggle_yearly);
+        if (toggleYearly != null) toggleYearly.setOnClickListener(v -> Toast.makeText(getContext(), "Yearly Billing Selected", Toast.LENGTH_SHORT).show());
     }
 }

@@ -1,10 +1,10 @@
 package com.example.financetracker.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,16 +14,20 @@ import androidx.fragment.app.Fragment;
 import com.example.financetracker.R;
 import com.example.financetracker.models.Transaction;
 
+/**
+ * F2 — Receives a Parcelable Transaction object via Bundle and displays its details.
+ * Uses fragment_transaction_detail.xml with uniquely-named IDs (tv_detail_title, etc.)
+ */
 public class TransactionDetailFragment extends Fragment {
 
     private static final String ARG_TRANSACTION = "selected_transaction";
     private Transaction transaction;
 
+    /** Factory method: bundles the Parcelable Transaction (F2 requirement). */
     public static TransactionDetailFragment newInstance(Transaction transaction) {
         TransactionDetailFragment fragment = new TransactionDetailFragment();
         Bundle args = new Bundle();
-        // Requirement F5 & Step 2: Passing Parcelable object in Bundle
-        args.putParcelable(ARG_TRANSACTION, transaction);
+        args.putParcelable(ARG_TRANSACTION, transaction); // F2: Bundle with Parcelable object
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,37 +42,46 @@ public class TransactionDetailFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Using transaction.xml as the base for the detail view
-        return inflater.inflate(R.layout.transaction, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        // Use the dedicated clean detail layout (not the full static transaction.xml screen)
+        return inflater.inflate(R.layout.fragment_transaction_detail, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Binding UI elements from transaction.xml
-        ImageView ivBack = view.findViewById(R.id.iv_back);
+        // Back navigation
+        View ivBack = view.findViewById(R.id.iv_back);
         if (ivBack != null) {
             ivBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
         }
 
+        // Bind transaction data to the UI
         if (transaction != null) {
-            // Update the UI with the transaction details
-            // Note: transaction.xml has mock items (Item 1, Item 2...), 
-            // in a real detail screen we would show specific fields for ONE transaction.
-            
-            // For now, let's map the first mock item's fields to our data
-            TextView tvTitle = view.findViewById(R.id.tv_coffee_title);
-            TextView tvSubtitle = view.findViewById(R.id.tv_coffee_sub);
-            TextView tvAmount = view.findViewWithTag("amount_tag"); // Using tag if ID isn't unique or clear
-            
-            if (tvTitle != null) tvTitle.setText(transaction.getTitle());
-            if (tvSubtitle != null) tvSubtitle.setText(transaction.getCategory() + " • " + transaction.getAccount());
-            
-            // Logic to hide other mock items to focus on this detail
-            View otherItems = view.findViewById(R.id.item2_content);
-            if (otherItems != null) ((ViewGroup)otherItems.getParent()).setVisibility(View.GONE);
+            TextView tvIcon     = view.findViewById(R.id.tv_detail_icon);
+            TextView tvTitle    = view.findViewById(R.id.tv_detail_title);
+            TextView tvSubtitle = view.findViewById(R.id.tv_detail_subtitle);
+            TextView tvAmount   = view.findViewById(R.id.tv_detail_amount);
+            TextView tvDate     = view.findViewById(R.id.tv_detail_date);
+
+            if (tvIcon != null)     tvIcon.setText(transaction.getIcon());
+            if (tvTitle != null)    tvTitle.setText(transaction.getTitle());
+            if (tvSubtitle != null) tvSubtitle.setText(
+                    transaction.getCategory() + " • " + transaction.getAccount());
+            if (tvDate != null)     tvDate.setText(transaction.getDate());
+
+            if (tvAmount != null) {
+                boolean income = transaction.isIncome();
+                String amountStr = (income ? "+" : "-") + "$"
+                        + String.format("%.2f", transaction.getAmount());
+                tvAmount.setText(amountStr);
+                tvAmount.setTextColor(income
+                        ? Color.parseColor("#0F9D58")
+                        : Color.parseColor("#C62828"));
+            }
         }
     }
 }

@@ -16,14 +16,17 @@
         android:paddingHorizontal="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Hamburger Menu -->
+        <!-- Hamburger / Back button used by SubscriptionFragment -->
         <TextView
-            android:id="@+id/iv_menu"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="☰"
             android:textColor="#111111"
             android:textSize="24sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -95,10 +98,13 @@
 
                 <!-- Monthly Subs Card -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_monthly_subs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -143,10 +149,13 @@
 
                 <!-- Total Debt Card -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_total_debt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -206,15 +215,30 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tv_view_all_subs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="View All"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="#3100D5"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </RelativeLayout>
+
+            <!--
+                F3 — RecyclerView populated by SubscriptionAdapter + SubscriptionViewHolder.
+                The three static subscription items (Netflix, Spotify, Adobe) that were
+                here have been replaced by this dynamic RecyclerView.
+            -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_subscriptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:nestedScrollingEnabled="false" />
 
             <!-- Sub 1: Netflix -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -436,11 +460,14 @@
                     android:textStyle="bold"
                     android:layout_centerVertical="true" />
 
-                <!-- Pill Add Button -->
+                <!-- Pill Add Button — btn_add_subscription used by SubscriptionFragment (F4) -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_add_subscription"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:layout_alignParentEnd="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#3100D5"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -454,9 +481,12 @@
 
             <!-- Debt Item 1: Owe (Red) -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_debt_owe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FFFAFA"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -560,9 +590,12 @@
 
             <!-- Debt Item 2: Owed To (Green) -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_debt_owed_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#F4FDF8"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -701,13 +734,13 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Overview -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_overview" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⊞" android:textColor="#A0A0A5" android:textSize="22sp" android:textStyle="bold" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="OVERVIEW" android:textColor="#A0A0A5" android:textSize="9sp" android:textStyle="bold" android:letterSpacing="0.05" />
         </LinearLayout>
 
         <!-- SUBS (Active) -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_subs" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <!-- Mocking a card/sub icon -->
             <com.google.android.material.card.MaterialCardView android:layout_width="20dp" android:layout_height="14dp" app:cardBackgroundColor="#3100D5" app:cardCornerRadius="2dp" app:strokeWidth="0dp" android:layout_marginBottom="4dp" android:layout_marginTop="4dp">
                 <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#FFFFFF" android:layout_marginTop="3dp"/>
@@ -716,13 +749,13 @@
         </LinearLayout>
 
         <!-- DEBT -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_debt" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏛️" android:textSize="18sp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="DEBT" android:textColor="#A0A0A5" android:textSize="9sp" android:textStyle="bold" android:letterSpacing="0.05" />
         </LinearLayout>
 
         <!-- SETTINGS -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_settings_sub" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@android:drawable/ic_menu_preferences" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="SETTINGS" android:textColor="#A0A0A5" android:textSize="9sp" android:textStyle="bold" android:letterSpacing="0.05" />
         </LinearLayout>

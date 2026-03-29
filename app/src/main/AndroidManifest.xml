@@ -24,6 +24,10 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".AddSubscriptionActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

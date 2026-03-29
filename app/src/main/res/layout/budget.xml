@@ -269,6 +269,7 @@
 
                 <!-- Add Goal Button -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_add_goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -608,7 +609,7 @@
     <LinearLayout
         android:id="@+id/bottom_nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:background="#FFFFFF"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -626,6 +627,7 @@
 
             <!-- Home Tab -->
             <LinearLayout
+                android:id="@+id/nav_home"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -707,6 +709,7 @@
 
             <!-- Profile Tab -->
             <LinearLayout
+                android:id="@+id/nav_profile"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

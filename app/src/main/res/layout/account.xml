@@ -161,10 +161,13 @@
 
                 <!-- Transfer Button -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_transfer"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#3100D5"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -194,10 +197,13 @@
 
                 <!-- Add New Button -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_add_new"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:cardBackgroundColor="#F3F0FF"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -241,10 +247,13 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:id="@+id/tv_view_all_wallets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="View All"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="#3100D5"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -252,9 +261,12 @@
 
             <!-- Wallet 1: Main Savings -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_wallet_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FAFAFB"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -329,9 +341,12 @@
 
             <!-- Wallet 2: Daily Cash -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_wallet_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FAFAFB"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -406,9 +421,12 @@
 
             <!-- Wallet 3: Visa Platinum -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_wallet_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FAFAFB"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -483,9 +501,12 @@
 
             <!-- Wallet 4: PayPal Account -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_wallet_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FAFAFB"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
@@ -560,9 +581,12 @@
 
             <!-- Upgrade Banner Card -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_upgrade"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_marginBottom="32dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#111111"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
@@ -644,13 +668,13 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Home -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_home" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_sort_by_size" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Home" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>
 
         <!-- Wallets (Active) -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_wallets" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#3100D5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Wallets" android:textColor="#3100D5" android:textSize="11sp" android:textStyle="bold" />
         </LinearLayout>
@@ -659,13 +683,13 @@
         <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
 
         <!-- Stats -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_stats" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_manage" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Stats" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>
 
         <!-- Profile -->
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+        <LinearLayout android:id="@+id/mock_nav_profile" android:clickable="true" android:focusable="true" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_myplaces" app:tint="#A0A0A5" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Profile" android:textColor="#A0A0A5" android:textSize="11sp" />
         </LinearLayout>
