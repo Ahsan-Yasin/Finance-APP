@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,8 +43,7 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // bridge F4: ViewModel handles threading and database natively
-        viewModel = new ViewModelProvider(this).get(FinanceViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(FinanceViewModel.class);
         return inflater.inflate(R.layout.dashbaord, container, false);
     }
 
@@ -61,9 +61,9 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
 
         setupRecyclerView();
         observeViewModel();
-        viewModel.loadTransactions(); // F3: Initial Load
-        
-        setupFragmentResultListener();
+        setupNavigation(view);
+
+        viewModel.loadTransactions();
     }
 
     private void setupRecyclerView() {
@@ -75,7 +75,6 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
     }
 
     private void observeViewModel() {
-        // Observation logic is safe for Java
         viewModel.getTransactions().observe(getViewLifecycleOwner(), entities -> {
             transactionList.clear();
             for (TransactionEntity entity : entities) {
@@ -94,17 +93,45 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
         });
     }
 
-    private void setupFragmentResultListener() {
-        getParentFragmentManager().setFragmentResultListener("add_transaction_request", getViewLifecycleOwner(), (requestKey, result) -> {
-            viewModel.loadTransactions(); // Refresh via ViewModel
-        });
+    private void setupNavigation(View view) {
+        // --- ADD TRANSACTION BUTTON (+) ---
+        View btnAdd = view.findViewById(R.id.btn_add_transaction);
+        if (btnAdd != null) {
+            btnAdd.setOnClickListener(v -> navigateTo(AddTransactionFragment.newInstance()));
+        }
+
+        // --- WALLETS NAVIGATION ---
+        View navBudget = view.findViewById(R.id.nav_budget);
+        if (navBudget != null) {
+            navBudget.setOnClickListener(v -> navigateTo(SubscriptionFragment.newInstance()));
+        }
+
+        View balanceCard = view.findViewById(R.id.balance_card);
+        if (balanceCard != null) {
+            balanceCard.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
+        }
+
+        // --- OTHER TABS ---
+        View navTrends = view.findViewById(R.id.nav_trends);
+        if (navTrends != null) {
+            navTrends.setOnClickListener(v -> navigateTo(AnalyticsFragment.newInstance()));
+        }
+
+        View navProfile = view.findViewById(R.id.nav_profile);
+        if (navProfile != null) {
+            navProfile.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
+        }
+    }
+
+    private void navigateTo(Fragment fragment) {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onTransactionClick(Transaction transaction) {
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, TransactionDetailFragment.newInstance(transaction))
-                .addToBackStack(null)
-                .commit();
+        navigateTo(TransactionDetailFragment.newInstance(transaction));
     }
 }

@@ -134,6 +134,7 @@
 
             <!-- Section Title -->
             <TextView
+                android:id="@+id/tv_section_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Subscription Details"
@@ -144,6 +145,7 @@
 
             <!-- Field 1: Service Name -->
             <TextView
+                android:id="@+id/tv_field_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Service Name"

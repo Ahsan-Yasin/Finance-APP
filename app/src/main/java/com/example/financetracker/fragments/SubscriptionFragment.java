@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,16 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.financetracker.R;
 import com.example.financetracker.adapters.SubscriptionAdapter;
 import com.example.financetracker.models.Subscription;
+import com.example.financetracker.models.Debt;
 import com.example.financetracker.viewmodel.FinanceViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SubscriptionFragment extends Fragment implements SubscriptionAdapter.OnSubscriptionClickListener {
 
     private List<Subscription> subscriptionList = new ArrayList<>();
     private SubscriptionAdapter adapter;
     private FinanceViewModel viewModel;
+    private TextView tvMonthlySubsTotal, tvTotalDebt, tvDebtListPreview;
 
     public static SubscriptionFragment newInstance() {
         return new SubscriptionFragment();
@@ -33,10 +37,7 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        // F4: Use ViewModel to bridge Kotlin Coroutines for Java
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(requireActivity()).get(FinanceViewModel.class);
         return inflater.inflate(R.layout.subscription, container, false);
     }
@@ -45,9 +46,15 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tvMonthlySubsTotal = view.findViewWithTag("tv_subs_total");
+        tvTotalDebt = view.findViewWithTag("tv_debt_total");
+        tvDebtListPreview = view.findViewWithTag("tv_debt_list_preview");
+
         setupRecyclerView(view);
         observeViewModel();
-        viewModel.loadSubscriptions(); // F3: Persistent Read
+        
+        viewModel.loadSubscriptions();
+        viewModel.loadDebts();
         
         setupNavigation(view);
         setupFragmentResultListener();
@@ -63,17 +70,35 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
     }
 
     private void observeViewModel() {
-        // Observe LiveData from the ViewModel (Safe for Java Fragments)
         viewModel.getSubscriptions().observe(getViewLifecycleOwner(), subs -> {
             subscriptionList.clear();
             subscriptionList.addAll(subs);
             adapter.notifyDataSetChanged();
         });
+
+        viewModel.getDebts().observe(getViewLifecycleOwner(), debts -> {
+            if (tvDebtListPreview != null) {
+                StringBuilder sb = new StringBuilder();
+                for (Debt debt : debts) {
+                    sb.append(debt.getName()).append(": $").append(String.format(Locale.US, "%.2f", debt.getAmount())).append("\n");
+                }
+                tvDebtListPreview.setText(debts.isEmpty() ? "No debts yet" : sb.toString());
+            }
+        });
+
+        viewModel.getTotalSubscriptionAmount().observe(getViewLifecycleOwner(), total -> {
+            if (tvMonthlySubsTotal != null) tvMonthlySubsTotal.setText(String.format(Locale.US, "$%.2f", total));
+        });
+
+        viewModel.getTotalDebtAmount().observe(getViewLifecycleOwner(), total -> {
+            if (tvTotalDebt != null) tvTotalDebt.setText(String.format(Locale.US, "$%.2f", total));
+        });
     }
 
     private void setupFragmentResultListener() {
         getParentFragmentManager().setFragmentResultListener("subscription_added", getViewLifecycleOwner(), (requestKey, result) -> {
-            viewModel.loadSubscriptions(); // Refresh list via ViewModel
+            viewModel.loadSubscriptions();
+            viewModel.loadDebts();
         });
     }
 

@@ -5,18 +5,26 @@ import androidx.lifecycle.*
 import com.example.financetracker.database.DatabaseHelper
 import com.example.financetracker.models.TransactionEntity
 import com.example.financetracker.models.Subscription
+import com.example.financetracker.models.Debt
 import kotlinx.coroutines.launch
 
 class FinanceViewModel(application: Application) : AndroidViewModel(application) {
     private val dbHelper = DatabaseHelper(application)
 
-    // F3: Transactions LiveData
     private val _transactions = MutableLiveData<List<TransactionEntity>>()
     fun getTransactions(): LiveData<List<TransactionEntity>> = _transactions
 
-    // F3: Subscriptions LiveData
     private val _subscriptions = MutableLiveData<List<Subscription>>()
     fun getSubscriptions(): LiveData<List<Subscription>> = _subscriptions
+
+    private val _debts = MutableLiveData<List<Debt>>()
+    fun getDebts(): LiveData<List<Debt>> = _debts
+
+    private val _totalSubscriptionAmount = MutableLiveData<Double>()
+    fun getTotalSubscriptionAmount(): LiveData<Double> = _totalSubscriptionAmount
+
+    private val _totalDebtAmount = MutableLiveData<Double>()
+    fun getTotalDebtAmount(): LiveData<Double> = _totalDebtAmount
 
     fun loadTransactions() {
         viewModelScope.launch {
@@ -26,7 +34,17 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
 
     fun loadSubscriptions() {
         viewModelScope.launch {
-            _subscriptions.postValue(dbHelper.getAllSubscriptions())
+            val subs = dbHelper.getAllSubscriptions()
+            _subscriptions.postValue(subs)
+            _totalSubscriptionAmount.postValue(subs.sumOf { it.amount })
+        }
+    }
+
+    fun loadDebts() {
+        viewModelScope.launch {
+            val debts = dbHelper.getAllDebts()
+            _debts.postValue(debts)
+            _totalDebtAmount.postValue(debts.sumOf { it.amount })
         }
     }
 
@@ -41,6 +59,13 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             dbHelper.insertSubscription(sub)
             loadSubscriptions()
+        }
+    }
+
+    fun addDebt(name: String, amount: Double, desc: String, type: String) {
+        viewModelScope.launch {
+            dbHelper.insertDebt(name, amount, desc, type)
+            loadDebts()
         }
     }
 }

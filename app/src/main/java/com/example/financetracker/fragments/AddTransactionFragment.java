@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,9 +56,7 @@ public class AddTransactionFragment extends Fragment {
                 Toast.makeText(getContext(), "Please enter an amount", Toast.LENGTH_SHORT).show();
             } else {
                 double amount = Double.parseDouble(amountStr);
-                // F3: SQLite Insert via ViewModel bridge (safe for Java)
                 viewModel.addTransaction(selectedCategory + " Purchase", amount, 1);
-                
                 getParentFragmentManager().setFragmentResult("add_transaction_request", new Bundle());
                 Toast.makeText(getContext(), "Transaction Saved!", Toast.LENGTH_SHORT).show();
                 getParentFragmentManager().popBackStack();
@@ -71,13 +70,42 @@ public class AddTransactionFragment extends Fragment {
     }
 
     private void setupCategoryClickListeners(View view) {
-        View food = view.findViewById(R.id.card_category_food);
-        if (food != null) food.setOnClickListener(v -> selectedCategory = "Food");
+        MaterialCardView food = view.findViewById(R.id.card_category_food);
+        MaterialCardView transport = view.findViewById(R.id.card_category_transport);
+        MaterialCardView shopping = view.findViewById(R.id.card_category_shopping);
+        MaterialCardView rent = view.findViewById(R.id.card_category_rent);
+        MaterialCardView health = view.findViewById(R.id.card_category_health);
+        MaterialCardView others = view.findViewById(R.id.card_category_others);
 
-        View transport = view.findViewById(R.id.card_category_transport);
-        if (transport != null) transport.setOnClickListener(v -> selectedCategory = "Transport");
+        View.OnClickListener categoryListener = v -> {
+            // Reset all strokes first
+            food.setStrokeWidth(1);
+            transport.setStrokeWidth(1);
+            shopping.setStrokeWidth(1);
+            rent.setStrokeWidth(1);
+            health.setStrokeWidth(1);
+            others.setStrokeWidth(1);
 
-        View shopping = view.findViewById(R.id.card_category_shopping);
-        if (shopping != null) shopping.setOnClickListener(v -> selectedCategory = "Shopping");
+            // Highlight selected
+            MaterialCardView selected = (MaterialCardView) v;
+            selected.setStrokeWidth(4);
+            selected.setStrokeColor(getResources().getColor(R.color.primary));
+
+            if (v.getId() == R.id.card_category_food) selectedCategory = "Food";
+            else if (v.getId() == R.id.card_category_transport) selectedCategory = "Transport";
+            else if (v.getId() == R.id.card_category_shopping) selectedCategory = "Shopping";
+            else if (v.getId() == R.id.card_category_rent) selectedCategory = "Rent";
+            else if (v.getId() == R.id.card_category_health) selectedCategory = "Health";
+            else selectedCategory = "Others";
+
+            Toast.makeText(getContext(), selectedCategory + " Selected", Toast.LENGTH_SHORT).show();
+        };
+
+        if (food != null) food.setOnClickListener(categoryListener);
+        if (transport != null) transport.setOnClickListener(categoryListener);
+        if (shopping != null) shopping.setOnClickListener(categoryListener);
+        if (rent != null) rent.setOnClickListener(categoryListener);
+        if (health != null) health.setOnClickListener(categoryListener);
+        if (others != null) others.setOnClickListener(categoryListener);
     }
 }
