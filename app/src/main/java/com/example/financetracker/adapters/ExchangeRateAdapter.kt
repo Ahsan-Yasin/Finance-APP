@@ -12,19 +12,19 @@ class ExchangeRateAdapter(private val rates: List<CurrencyItem>) : RecyclerView.
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val currencyCodeText: TextView = view.findViewById(R.id.tv_currency_code)
-        val rateText: TextView = view.findViewById(R.id.tv_rate)
+        val rateText: TextView = view.findViewById(R.id.tv_currency_rate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_exchange_rate, parent, false)
+            .inflate(R.layout.item_currency, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = rates[position]
         holder.currencyCodeText.text = item.currencyCode
-        holder.rateText.text = item.rate.toString()
+        holder.rateText.text = String.format("%.4f", item.rate)
     }
 
     override fun getItemCount() = rates.size

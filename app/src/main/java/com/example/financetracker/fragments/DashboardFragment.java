@@ -94,32 +94,39 @@ public class DashboardFragment extends Fragment implements TransactionAdapter.On
     }
 
     private void setupNavigation(View view) {
+        // --- PROMINENT REST API ENTRY (F1) ---
+        View cardApi = view.findViewById(R.id.card_market_api);
+        if (cardApi != null) {
+            cardApi.setOnClickListener(v -> navigateTo(ExchangeRatesFragment.Companion.newInstance()));
+        }
+
         // --- ADD TRANSACTION BUTTON (+) ---
         View btnAdd = view.findViewById(R.id.btn_add_transaction);
         if (btnAdd != null) {
             btnAdd.setOnClickListener(v -> navigateTo(AddTransactionFragment.newInstance()));
         }
 
-        // --- WALLETS NAVIGATION ---
+        // --- WALLETS/SUBS NAVIGATION ---
         View navBudget = view.findViewById(R.id.nav_budget);
         if (navBudget != null) {
             navBudget.setOnClickListener(v -> navigateTo(SubscriptionFragment.newInstance()));
         }
 
-        View balanceCard = view.findViewById(R.id.balance_card);
-        if (balanceCard != null) {
-            balanceCard.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
-        }
-
-        // --- OTHER TABS ---
+        // --- STATS/LOCAL DB NAVIGATION (F5) ---
         View navTrends = view.findViewById(R.id.nav_trends);
         if (navTrends != null) {
-            navTrends.setOnClickListener(v -> navigateTo(AnalyticsFragment.newInstance()));
+            navTrends.setOnClickListener(v -> navigateTo(TransactionsDbFragment.Companion.newInstance()));
         }
 
+        // --- PROFILE/ACCOUNTS ---
         View navProfile = view.findViewById(R.id.nav_profile);
         if (navProfile != null) {
             navProfile.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
+        }
+        
+        View profileCard = view.findViewById(R.id.profile_card);
+        if (profileCard != null) {
+            profileCard.setOnClickListener(v -> navigateTo(AccountFragment.newInstance()));
         }
     }
 
