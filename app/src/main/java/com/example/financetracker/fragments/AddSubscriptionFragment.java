@@ -11,15 +11,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.financetracker.R;
+import com.example.financetracker.models.Subscription;
+import com.example.financetracker.viewmodel.FinanceViewModel;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.UUID;
 
 public class AddSubscriptionFragment extends Fragment {
 
     private EditText etServiceName, etAmount;
     private MaterialButton btnSave;
     private ImageView ivBack;
+    private FinanceViewModel viewModel;
+    private String billingCycle = "Monthly";
 
     public static AddSubscriptionFragment newInstance() {
         return new AddSubscriptionFragment();
@@ -28,6 +35,7 @@ public class AddSubscriptionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(requireActivity()).get(FinanceViewModel.class);
         return inflater.inflate(R.layout.add_record, container, false);
     }
 
@@ -35,8 +43,8 @@ public class AddSubscriptionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        etServiceName = view.findViewById(R.id.tabs_layout).findViewWithTag("service_name"); // Assuming tags or specific IDs
-        
+        etServiceName = view.findViewById(R.id.et_service_name);
+        etAmount = view.findViewById(R.id.et_amount);
         ivBack = view.findViewById(R.id.iv_back);
         btnSave = view.findViewById(R.id.btn_save);
 
@@ -44,25 +52,42 @@ public class AddSubscriptionFragment extends Fragment {
 
         if (btnSave != null) {
             btnSave.setOnClickListener(v -> {
-                Toast.makeText(getContext(), "Subscription Saved!", Toast.LENGTH_SHORT).show();
-                getParentFragmentManager().popBackStack();
+                String name = etServiceName.getText().toString();
+                String amountStr = etAmount.getText().toString();
+
+                if (name.isEmpty() || amountStr.isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveSubscription(name, Double.parseDouble(amountStr));
+                }
             });
         }
 
-        // --- NEW CLICKS TO MAKE EVERYTHING INTERACTIVE ---
+        setupCycleToggles(view);
+    }
 
-        // Tabs
-        View tabSubscription = view.findViewById(R.id.tab_subscription);
-        if (tabSubscription != null) tabSubscription.setOnClickListener(v -> Toast.makeText(getContext(), "Subscription Tab Selected", Toast.LENGTH_SHORT).show());
-
-        View tabDebtIou = view.findViewById(R.id.tab_debt_iou);
-        if (tabDebtIou != null) tabDebtIou.setOnClickListener(v -> Toast.makeText(getContext(), "Debt/IOU Tab Selected", Toast.LENGTH_SHORT).show());
-
-        // Billing Cycle Toggles
+    private void setupCycleToggles(View view) {
         View toggleMonthly = view.findViewById(R.id.toggle_monthly);
-        if (toggleMonthly != null) toggleMonthly.setOnClickListener(v -> Toast.makeText(getContext(), "Monthly Billing Selected", Toast.LENGTH_SHORT).show());
-
         View toggleYearly = view.findViewById(R.id.toggle_yearly);
-        if (toggleYearly != null) toggleYearly.setOnClickListener(v -> Toast.makeText(getContext(), "Yearly Billing Selected", Toast.LENGTH_SHORT).show());
+
+        if (toggleMonthly != null) toggleMonthly.setOnClickListener(v -> billingCycle = "Monthly");
+        if (toggleYearly != null) toggleYearly.setOnClickListener(v -> billingCycle = "Yearly");
+    }
+
+    private void saveSubscription(String name, double amount) {
+        Subscription sub = new Subscription(
+                UUID.randomUUID().toString(),
+                name,
+                amount,
+                "Next Month",
+                billingCycle,
+                name.substring(0, 1).toUpperCase()
+        );
+
+        viewModel.addSubscription(sub);
+        
+        getParentFragmentManager().setFragmentResult("subscription_added", new Bundle());
+        Toast.makeText(getContext(), "Subscription Saved!", Toast.LENGTH_SHORT).show();
+        getParentFragmentManager().popBackStack();
     }
 }
