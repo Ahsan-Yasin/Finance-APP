@@ -41,16 +41,42 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <Button
-            android:id="@+id/btn_reset"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:text="RESET"
-            android:textSize="10sp"
-            android:backgroundTint="#FF4444"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- RESTORED Profile Icon for Firebase Auth prominence -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_profile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="#F0EFFF">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    app:tint="#3100D5" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="RESET"
+                android:textSize="10sp"
+                android:backgroundTint="#FF4444" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -108,7 +134,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="$0.00"
-                            android:tag="tv_subs_total"
                             android:textColor="#111827"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -142,7 +167,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="$0.00"
-                            android:tag="tv_debt_total"
                             android:textColor="#111827"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -202,7 +226,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="No debts yet"
-                android:tag="tv_debt_list_preview"
                 android:textColor="#6B7280"
                 android:textSize="14sp" />
 

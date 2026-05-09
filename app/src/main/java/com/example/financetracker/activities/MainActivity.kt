@@ -1,6 +1,9 @@
 package com.example.financetracker.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.financetracker.R
@@ -8,7 +11,10 @@ import com.example.financetracker.fragments.AccountFragment
 import com.example.financetracker.fragments.AnalyticsFragment
 import com.example.financetracker.fragments.DashboardFragment
 import com.example.financetracker.fragments.SubscriptionFragment
+import com.example.financetracker.ui.LoginActivity
+import com.example.financetracker.ui.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,18 +25,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // F1 — Receive USER_EMAIL from LoginActivity Intent Extra
-        userEmail = intent.getStringExtra("USER_EMAIL") ?: "user@example.com"
-
+        userEmail = intent.getStringExtra("USER_EMAIL") ?: FirebaseAuth.getInstance().currentUser?.email ?: "user@example.com"
         bottomNav = findViewById(R.id.bottom_navigation)
 
-        // Load default fragment only on first creation (not on rotation)
         if (savedInstanceState == null) {
             loadFragment(DashboardFragment.newInstance(userEmail))
             bottomNav.selectedItemId = R.id.navigation_home
         }
 
-        // F4 — Fragment Transactions: switch fragments without restarting the Activity
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -46,18 +48,34 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_settings -> {
-                    loadFragment(AccountFragment.newInstance())
-                    true
+                    // Navigate to the new Compose Profile Screen
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    false 
                 }
                 else -> false
             }
         }
     }
 
-    /**
-     * Replaces the fragment container content with the given fragment.
-     * Does NOT add to back stack so BottomNav tabs feel like top-level destinations.
-     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                // PART 1.6 - Logout and redirect
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)

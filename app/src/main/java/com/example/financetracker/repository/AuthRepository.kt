@@ -1,4 +1,4 @@
-package com.smd.financeTracker.repository
+package com.example.financetracker.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

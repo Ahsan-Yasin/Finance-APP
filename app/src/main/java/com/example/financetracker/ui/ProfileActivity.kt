@@ -1,7 +1,8 @@
-package com.smd.financeTracker.ui
+package com.example.financetracker.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -14,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.smd.financeTracker.repository.AuthRepository
+import com.example.financetracker.repository.AuthRepository
 
 class ProfileActivity : ComponentActivity() {
     private val authRepository = AuthRepository()
@@ -89,7 +90,10 @@ class ProfileActivity : ComponentActivity() {
                 OutlinedButton(
                     onClick = { 
                         FirebaseCrashlytics.getInstance().log("User triggered a test crash")
-                        throw RuntimeException("Test Crash for Assignment #04") 
+                        // Part 5 - Feature B: Log custom event before crash
+                        val crashException = RuntimeException("Test Crash for Assignment #04")
+                        FirebaseCrashlytics.getInstance().recordException(crashException)
+                        throw crashException 
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {

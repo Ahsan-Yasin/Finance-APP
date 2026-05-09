@@ -1,9 +1,11 @@
 package com.example.financetracker.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.example.financetracker.adapters.SubscriptionAdapter;
 import com.example.financetracker.models.Subscription;
 import com.example.financetracker.models.Debt;
 import com.example.financetracker.viewmodel.FinanceViewModel;
+import com.example.financetracker.ui.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +49,9 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvMonthlySubsTotal = view.findViewWithTag("tv_subs_total");
-        tvTotalDebt = view.findViewWithTag("tv_debt_total");
-        tvDebtListPreview = view.findViewWithTag("tv_debt_list_preview");
+        tvMonthlySubsTotal = view.findViewById(R.id.tv_subs_total);
+        tvTotalDebt = view.findViewById(R.id.tv_debt_total);
+        tvDebtListPreview = view.findViewById(R.id.tv_debt_list_preview);
 
         setupRecyclerView(view);
         observeViewModel();
@@ -76,13 +79,19 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
             adapter.notifyDataSetChanged();
         });
 
-        viewModel.getDebts().observe(getViewLifecycleOwner(), debts -> {
+        viewModel.getDebts().observe(getViewLifecycleOwner(), (List<Debt> debts) -> {
             if (tvDebtListPreview != null) {
-                StringBuilder sb = new StringBuilder();
-                for (Debt debt : debts) {
-                    sb.append(debt.getName()).append(": $").append(String.format(Locale.US, "%.2f", debt.getAmount())).append("\n");
+                if (debts == null || debts.isEmpty()) {
+                    tvDebtListPreview.setText("No debts yet");
+                } else {
+                    StringBuilder sb = new StringBuilder();
+                    for (Debt debt : debts) {
+                        sb.append(debt.getName()).append(": $")
+                          .append(String.format(Locale.US, "%.2f", debt.getAmount()))
+                          .append("\n");
+                    }
+                    tvDebtListPreview.setText(sb.toString());
                 }
-                tvDebtListPreview.setText(debts.isEmpty() ? "No debts yet" : sb.toString());
             }
         });
 
@@ -115,6 +124,23 @@ public class SubscriptionFragment extends Fragment implements SubscriptionAdapte
                             .addToBackStack(null)
                             .commit()
             );
+        }
+
+        // PART 5 - RESET Logic
+        Button btnReset = view.findViewById(R.id.btn_reset);
+        if (btnReset != null) {
+            btnReset.setOnClickListener(v -> {
+                viewModel.resetData();
+                Toast.makeText(getContext(), "Database Reset!", Toast.LENGTH_SHORT).show();
+            });
+        }
+        
+        // Make Firebase Auth Prominent
+        View btnProfile = view.findViewById(R.id.btn_profile);
+        if (btnProfile != null) {
+            btnProfile.setOnClickListener(v -> {
+                startActivity(new Intent(getActivity(), ProfileActivity.class));
+            });
         }
     }
 

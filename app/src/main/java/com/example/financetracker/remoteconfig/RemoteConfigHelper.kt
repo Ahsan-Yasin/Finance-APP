@@ -1,4 +1,4 @@
-package com.smd.financeTracker.remoteconfig
+package com.example.financetracker.remoteconfig
 
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -13,12 +13,16 @@ class RemoteConfigHelper {
             minimumFetchIntervalInSeconds = 3600
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaultsAsync(mapOf(
-            "welcome_message" to "Welcome to Finance Tracker!",
-            "feature_analytics_enabled" to true
-        ))
+        
+        // Define default values
+        val defaults = mapOf(
+            "welcome_message" to "Welcome to your Finance Tracker!",
+            "new_feature_enabled" to true
+        )
+        remoteConfig.setDefaultsAsync(defaults)
     }
 
+    // NF1 - Fetch and activate values using coroutines
     suspend fun fetchAndActivate(): Boolean {
         return try {
             remoteConfig.fetchAndActivate().await()
@@ -28,5 +32,5 @@ class RemoteConfigHelper {
     }
 
     fun getWelcomeMessage(): String = remoteConfig.getString("welcome_message")
-    fun isAnalyticsEnabled(): Boolean = remoteConfig.getBoolean("feature_analytics_enabled")
+    fun isNewFeatureEnabled(): Boolean = remoteConfig.getBoolean("new_feature_enabled")
 }

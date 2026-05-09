@@ -167,6 +167,7 @@ class DatabaseHelper(context: Context) :
         list
     }
 
+    // F5 dynamic SQL with LIKE
     suspend fun searchTransactionsByTitle(query: String): List<TransactionEntity> = withContext(Dispatchers.IO) {
         val db = readableDatabase
         val selection = "$COL_TRANS_TITLE LIKE ?"
