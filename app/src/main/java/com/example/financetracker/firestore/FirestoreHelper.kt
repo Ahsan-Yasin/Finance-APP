@@ -1,20 +1,18 @@
 package com.example.financetracker.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.firestore.toObjects
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 
 class FirestoreHelper {
     private val db = FirebaseFirestore.getInstance()
 
-    // PART 2.2 - Sync user data (real-time listener)
-    fun <T : Any> syncUserData(collection: String, clazz: Class<T>): Flow<List<T>> {
-        return db.collection(collection).snapshots().map { snapshot ->
-            snapshot.toObjects(clazz)
-        }
+    // PART 2.2 - Sync user data (real-time listener) - Raw snapshots to avoid deserialization crashes
+    fun observeCollection(collectionPath: String): Flow<QuerySnapshot> {
+        return db.collection(collectionPath).snapshots()
     }
 
     // PART 2.2 - Save data using coroutines

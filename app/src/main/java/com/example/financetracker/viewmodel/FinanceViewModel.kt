@@ -8,13 +8,14 @@ import com.example.financetracker.models.TransactionEntity
 import com.example.financetracker.models.Subscription
 import com.example.financetracker.models.Debt
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collectLatest
 
 class FinanceViewModel(application: Application) : AndroidViewModel(application) {
     private val dbHelper = DatabaseHelper(application)
     private val firestoreHelper = FirestoreHelper()
     private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     private val _transactions = MutableLiveData<List<TransactionEntity>>()
     fun getTransactions(): LiveData<List<TransactionEntity>> = _transactions
@@ -32,17 +33,21 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
     fun getTotalDebtAmount(): LiveData<Double> = _totalDebtAmount
 
     init {
+        loadTransactions()
+        loadSubscriptions()
+        loadDebts()
         syncWithFirestore()
     }
 
     private fun syncWithFirestore() {
         val userId = auth.currentUser?.uid ?: return
-        viewModelScope.launch {
-            firestoreHelper.syncUserData("users/$userId/transactions", Map::class.java).collectLatest {
+        // Use a direct listener on the transactions collection to trigger local reloads
+        // This avoids the 'Class java.util.Map has generic type parameters' crash
+        db.collection("users").document(userId).collection("transactions")
+            .addSnapshotListener { _, _ ->
                 loadTransactions()
                 loadDebtSummary()
             }
-        }
     }
 
     fun loadTransactions() {
@@ -77,8 +82,16 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             val id = dbHelper.insertTransaction(title, amount, catId)
             loadTransactions()
+            
             val userId = auth.currentUser?.uid ?: return@launch
-            firestoreHelper.saveData("users/$userId/transactions", id.toString(), mapOf("title" to title, "amount" to amount))
+            val transactionData = mapOf(
+                "title" to title,
+                "amount" to amount,
+                "categoryId" to catId,
+                "timestamp" to System.currentTimeMillis()
+            )
+            db.collection("users").document(userId).collection("transactions")
+                .document(id.toString()).set(transactionData)
         }
     }
 
@@ -86,8 +99,10 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             dbHelper.insertSubscription(sub)
             loadSubscriptions()
+            
             val userId = auth.currentUser?.uid ?: return@launch
-            firestoreHelper.saveData("users/$userId/subscriptions", sub.id, sub)
+            db.collection("users").document(userId).collection("subscriptions")
+                .document(sub.id).set(sub)
         }
     }
 
@@ -95,8 +110,11 @@ class FinanceViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             dbHelper.insertDebt(name, amount, desc, type)
             loadDebts()
+            
             val userId = auth.currentUser?.uid ?: return@launch
-            firestoreHelper.saveData("users/$userId/debts", System.currentTimeMillis().toString(), mapOf("name" to name, "amount" to amount))
+            val debtData = mapOf("name" to name, "amount" to amount, "desc" to desc, "type" to type)
+            db.collection("users").document(userId).collection("debts")
+                .document(System.currentTimeMillis().toString()).set(debtData)
         }
     }
 

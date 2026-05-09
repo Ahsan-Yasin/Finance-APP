@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.financetracker.R
 import com.example.financetracker.database.DatabaseHelper
+import com.example.financetracker.models.TransactionEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -68,13 +69,12 @@ class TransactionsDbFragment : Fragment() {
 
         addBtn.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                // Add a random transaction to test CRUD Create
                 val suffix = System.currentTimeMillis() % 1000
                 val newId = dbHelper.insertTransaction("Groceries $suffix", (10..100).random().toDouble(), 1)
                 
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "Added transaction ID: $newId", Toast.LENGTH_SHORT).show()
-                    loadAllData() // refresh
+                    loadAllData()
                 }
             }
         }

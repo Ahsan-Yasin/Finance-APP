@@ -66,7 +66,6 @@ class DatabaseHelper(context: Context) :
         onUpgrade(db, DATABASE_VERSION, DATABASE_VERSION)
     }
 
-    // --- SUBSCRIPTION CRUD ---
     suspend fun insertSubscription(sub: Subscription): Long = withContext(Dispatchers.IO) {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -98,7 +97,6 @@ class DatabaseHelper(context: Context) :
         list
     }
 
-    // --- DEBT CRUD ---
     suspend fun insertDebt(name: String, amount: Double, desc: String, type: String): Long = withContext(Dispatchers.IO) {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -139,7 +137,6 @@ class DatabaseHelper(context: Context) :
         total
     }
 
-    // --- TRANSACTION CRUD ---
     suspend fun insertTransaction(title: String, amount: Double, categoryId: Int): Long = withContext(Dispatchers.IO) {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -167,7 +164,6 @@ class DatabaseHelper(context: Context) :
         list
     }
 
-    // F5 dynamic SQL with LIKE
     suspend fun searchTransactionsByTitle(query: String): List<TransactionEntity> = withContext(Dispatchers.IO) {
         val db = readableDatabase
         val selection = "$COL_TRANS_TITLE LIKE ?"
