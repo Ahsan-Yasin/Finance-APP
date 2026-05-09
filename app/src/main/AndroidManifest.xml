@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
+        android:name="com.smd.financeTracker.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +17,7 @@
         android:theme="@style/Theme.FinanceTracker" >
         
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.smd.financeTracker.ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +26,28 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.smd.financeTracker.ui.RegisterActivity"
             android:exported="false" />
 
         <activity
-            android:name=".AddSubscriptionActivity"
+            android:name="com.example.financetracker.activities.MainActivity"
             android:exported="false" />
+
+        <activity
+            android:name="com.smd.financeTracker.ui.ProfileActivity"
+            android:exported="false" />
+
+        <service
+            android:name="com.smd.financeTracker.notifications.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="finance_tracker_channel" />
     </application>
 
 </manifest>

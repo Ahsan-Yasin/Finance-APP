@@ -12,6 +12,11 @@ appcompat = "1.6.1"
 material = "1.11.0"
 constraintlayout = "2.1.4"
 cardview = "1.0.0"
+googleServices = "4.4.1"
+firebaseBom = "32.8.0"
+crashlyticsPlugin = "2.9.9"
+navigationCompose = "2.7.7"
+googlePlayServicesAuth = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +38,23 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+
+# Navigation
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Google Sign In
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "googlePlayServicesAuth" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
